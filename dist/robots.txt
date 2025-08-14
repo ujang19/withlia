@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://withlia.example/sitemap-index.xml

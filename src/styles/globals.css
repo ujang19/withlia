@@ -1,0 +1,67 @@
+@import "@fontsource-variable/montserrat";
+@import "@fontsource-variable/roboto";
+
+/* Tailwind layers */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS variables for brand colors */
+:root {
+  --blue: #2cb4ff;
+  --navy: #0b2234;
+  --orange: #ff6b35;
+}
+
+/* Base element styles (lightweight, a11y-first) */
+html {
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Ensure Lenis controls scrolling, avoid native smooth scroll conflicts */
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  font-family: "Roboto Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  background-color: #ffffff;
+  scroll-behavior: auto;
+}
+
+/* Headings use Montserrat for visual parity */
+h1, h2, h3, h4 {
+  font-family: "Montserrat Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+}
+
+/* Media defaults */
+img, svg, video, canvas {
+  display: block;
+  max-width: 100%;
+}
+
+/* Better focus treatment */
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background: color-mix(in oklab, var(--blue) 18%, white);
+}
+
+/* Utility: container width similar to original */
+.container-w {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;  /* 24px */
+  padding-right: 1.5rem;
+}
+
+/* Shadow used across cards */
+.shadow-card {
+  box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+}

@@ -1,0 +1,64 @@
+---
+/**
+ * Competitor Comparison table (static, accessible).
+ * Mirrors the original table content with semantic markup.
+ */
+const { id, class: _class, className = "", ...rest } = Astro.props;
+---
+
+<section {...rest} id={id} class={`w-full py-20 ${_class ? _class : ""} ${className}`}>
+  <div class="container-w">
+    <h2 class="text-center font-extrabold leading-tight tracking-tight text-3xl md:text-3xl">
+      Lihat Bedanya WithLia vs Alternatif
+    </h2>
+
+    <div class="mt-8 overflow-x-auto rounded-2xl border border-black/10">
+      <table class="min-w-full divide-y divide-black/10 text-sm">
+        <caption class="sr-only">Perbandingan fitur WithLia vs alternatif</caption>
+        <thead class="bg-black/5 text-sm md:text-base">
+          <tr>
+            <th scope="col" class="px-4 py-3 text-left">Fitur</th>
+            <th scope="col" class="px-4 py-3 text-left">Platform AI Umum</th>
+            <th scope="col" class="px-4 py-3 text-left">Bootcamp</th>
+            <th scope="col" class="px-4 py-3 text-left">Mentor Freelance</th>
+            <th scope="col" class="px-4 py-3 text-left text-[var(--blue)]">WithLia</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-black/5 bg-white">
+          {
+            [
+              ["Framework Strategis", false, true, false, true],
+              ["AI dituning khusus marketing", false, false, false, true],
+              ["Prompt siap pakai", false, false, false, true],
+              ["Edukasi + Eksekusi", false, true, false, true],
+              ["Komunitas Kolaboratif", false, false, true, true]
+            ].map((row) => (
+              <tr>
+                <th scope="row" class="px-4 py-4 font-medium text-left">{row[0]}</th>
+                {[1,2,3,4].map((idx) => (
+                  <td class={`px-4 py-4 ${idx === 4 ? "bg-[var(--blue)]/5 font-semibold" : ""}`}>
+                    {
+                      row[idx]
+                        ? (
+                          // Check icon
+                          <svg class={`h-5 w-5 ${idx === 4 ? "text-[var(--blue)]" : "text-emerald-600"}`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M20 6L9 17l-5-5" />
+                          </svg>
+                        )
+                        : (
+                          // X icon
+                          <svg class="h-5 w-5 text-rose-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                            <path d="M18 6L6 18M6 6l12 12" />
+                          </svg>
+                        )
+                    }
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>

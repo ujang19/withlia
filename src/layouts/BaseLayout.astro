@@ -1,0 +1,129 @@
+---
+import "../styles/globals.css";
+import { site, meta, buildTitle } from "../lib/seo";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  url?: string;
+}
+
+const {
+  title = meta.title,
+  description = meta.description,
+  image = meta.image,
+  url = site
+} = Astro.props as Props;
+
+// Cloudflare Web Analytics token (provided)
+const CF_TOKEN = "BLTkWpxFJ84GpKQLDSZc34N7CGRO7jJToSh6gW6a";
+---
+
+<html lang="id" class="h-full">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{buildTitle(title)}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+
+    <!-- Icons -->
+    <link rel="icon" href="/favicon-withlia.png" type="image/png" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={buildTitle(title)} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={image} />
+    <meta property="og:site_name" content="WithLia" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={buildTitle(title)} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+
+    <!-- Preconnects (safe performance hints) -->
+    <link rel="preconnect" href="https://static.cloudflareinsights.com" crossorigin />
+
+    <!-- Tally widget embed for popup forms -->
+    <script async src="https://tally.so/widgets/embed.js"></script>
+
+    <!-- Cloudflare Web Analytics (privacy-first, lightweight) -->
+    <script
+      defer
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token: CF_TOKEN })}
+    ></script>
+  </head>
+  <body class="antialiased text-[#111]">
+    <slot />
+
+    <!-- Lenis smooth scroll -->
+    <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.46/bundled/lenis.min.js"></script>
+    <script type="module">
+      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      function start(LenisClass) {
+        if (!LenisClass) return;
+        try {
+          document.documentElement.style.scrollBehavior = 'auto';
+          document.body.style.scrollBehavior = 'auto';
+        } catch {}
+        const lenis = new LenisClass({
+              duration: 1.1,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+              smoothWheel: true,
+              smoothTouch: true
+            });
+            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+            requestAnimationFrame(raf);
+
+            // Force a small initial tick to ensure Lenis takes over
+            setTimeout(() => lenis.raf(performance.now()), 0);
+
+            // Smooth scroll for in-page anchors, excluding Tally popup links
+            document.addEventListener('click', (e) => {
+              const a = e.target?.closest?.('a[href^="#"]');
+              if (!a) return;
+              if (a.hasAttribute('data-tally-open')) return;
+              const href = a.getAttribute('href') || '';
+              if (href.startsWith('#tally-open')) return;
+              const id = decodeURIComponent(href.slice(1));
+              if (!id) return;
+              const target = document.getElementById(id);
+              if (!target) return;
+              e.preventDefault();
+              history.pushState(null, '', `#${id}`);
+              lenis.scrollTo(target, { offset: -8 });
+            });
+
+            // Expose for quick debugging
+            window.lenis = lenis;
+
+            // If page loads with a hash, re-scroll with Lenis to ensure smooth positioning
+            const hash = location.hash || '';
+            if (hash && !hash.startsWith('#tally-open')) {
+              const id = decodeURIComponent(hash.slice(1));
+              const target = document.getElementById(id);
+              if (target) {
+                setTimeout(() => lenis.scrollTo(target, { offset: -8 }), 0);
+              }
+            }
+      }
+      if (!reduce) {
+        import('https://unpkg.com/@studio-freight/lenis@1.0.46?module')
+          .then((mod) => start(mod?.default || mod?.Lenis || window.Lenis))
+          .catch(() => {
+            // fallback to global script
+            const tryGlobal = () => {
+              if (window.Lenis) { start(window.Lenis); return; }
+              requestAnimationFrame(tryGlobal);
+            };
+            tryGlobal();
+          });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import Hero from "../components/Hero.astro";
+import ValueProps from "../components/ValueProps.astro";
+import Pricing from "../components/Pricing.astro";
+import MotionShowcase from "../components/MotionShowcase.tsx";
+import NavBar from "../components/NavBar.tsx";
+// These will be created next:
+import CTA from "../components/CTA.astro";
+import Footer from "../components/Footer.astro";
+
+import { site, meta } from "../lib/seo";
+
+const orgLd = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "WithLia",
+  url: site,
+  logo: "/favicon.svg",
+  sameAs: []
+};
+
+const websiteLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: meta.title,
+  url: site,
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${site}/?q={search_term_string}`,
+    "query-input": "required name=search_term_string"
+  }
+};
+---
+
+<BaseLayout>
+  <NavBar client:idle />
+
+  <Hero />
+
+  <!-- React island: hydrate saat terlihat -->
+  <!-- moved "Strategi Siap Pakai dalam 7 Hari" below Cara Kerja WithLia -->
+
+  <ValueProps />
+
+  <!-- 7 Days section moved here, right after "Cara Kerja WithLia Biar Kamu Gampang Eksekusi" -->
+  <section id="seven-days" class="w-full py-16">
+    <div class="container-w">
+      <h2 class="text-center font-extrabold leading-tight tracking-tight text-3xl md:text-3xl">
+        Strategi Siap Pakai dalam 7 Hari
+      </h2>
+      <MotionShowcase client:visible />
+    </div>
+  </section>
+
+  <!-- Anchor target for primary CTA -->
+  <Pricing id="start" />
+
+  <!-- Anchor target for trial CTA -->
+  <CTA id="trial" />
+
+  <Footer />
+
+  <!-- JSON-LD can be in body; search engines support it -->
+  <script type="application/ld+json">
+    {JSON.stringify(orgLd)}
+  </script>
+  <script type="application/ld+json">
+    {JSON.stringify(websiteLd)}
+  </script>
+</BaseLayout>

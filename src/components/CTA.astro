@@ -1,0 +1,61 @@
+---
+/**
+ * CTA sections:
+ * - Success Scenario (pastel blue with subtle grid)
+ * - Final CTA (navy background) with anchors compatibility
+ */
+const { id, class: _class, className = "", ...rest } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<!-- Wrapper provides anchor target for #trial -->
+<div {...rest} id={id} class={`contents ${_class ? _class : ""} ${className}`}></div>
+
+<!-- Success Scenario -->
+<section class="relative w-full py-20" style="background:#E7F1FF">
+  <div class="absolute inset-0 opacity-30" style="background-image:linear-gradient(rgba(17,17,17,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,17,0.06) 1px, transparent 1px); background-size:24px 24px, 24px 24px; background-position:-1px -1px, -1px -1px;"></div>
+  <div class="relative container-w">
+    <h2 class="text-center font-extrabold leading-tight tracking-tight text-3xl md:text-3xl">
+      7 Hari Lagi Strategi Marketing & AI-mu Siap Jalan
+    </h2>
+    <p class="mx-auto mt-4 max-w-3xl text-center text-base leading-relaxed text-black/70">
+      Bayangin 7 hari dari sekarang… Kamu udah punya strategi jelas, konten siap posting, dan AI yang ngerti gaya marketing kamu.
+      Mentor & komunitas siap nge-support, campaign udah jalan. Dan semua ini tanpa harus bongkar tabungan buat bayar kursus
+      terpisah, AI premium, dan mentor freelance.
+    </p>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section id="final-cta" class="w-full py-20 text-white" style="background:#1d6ec5">
+  <div class="container-w mx-auto max-w-3xl text-center">
+    <h2 class="font-extrabold leading-tight tracking-tight text-3xl md:text-4xl">
+      Kalau udah ada cara lebih cepat & lebih jelas untuk mulai, kenapa harus jalan sendiri?
+    </h2>
+
+    <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+      <a href="#start" class="inline-flex items-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card transition-transform hover:scale-[1.02] active:scale-[0.99]">
+        Mulai Sekarang
+        <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <path d="M9 18l6-6-6-6"></path>
+        </svg>
+      </a>
+      <a
+        href="#tally-open=nPxD60&tally-layout=modal&tally-align-left=1&tally-emoji-text=👋&tally-emoji-animation=wave&tally-form-events-forwarding=1"
+        class="inline-flex items-center gap-2 rounded-xl border-2 border-[var(--blue)] px-5 py-3 font-semibold text-[var(--blue)] transition-colors hover:bg-[var(--blue)] bg-white hover:text-white"
+        data-tally-open="nPxD60"
+        data-tally-layout="modal"
+        data-tally-align-left="1"
+        data-tally-emoji-text="👋"
+        data-tally-emoji-animation="wave"
+        data-tally-form-events-forwarding="1"
+      >
+        Coba Gratis Dulu
+      </a>
+    </div>
+
+    <p class="mt-4 text-white/70">
+      Mulai 7 hari pertama kamu bareng WithLia sekarang.
+    </p>
+  </div>
+</section>
