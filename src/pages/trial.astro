@@ -1,0 +1,54 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import NavBar from "../components/NavBar.tsx";
+import Footer from "../components/Footer.astro";
+import { site } from "../lib/seo";
+
+interface Props {
+  request: Request;
+}
+
+const { request } = Astro.props as Props;
+
+// Parse query param `name` and sanitize a bit
+const url = new URL(request.url);
+let name = url.searchParams.get("name") || "";
+name = name.replace(/\+/g, " ").trim();
+if (name.startsWith("@")) name = name.slice(1).trim();
+// Fallback
+const displayName = name || "Teman WithLia";
+---
+
+<BaseLayout title={`Withlia Trial — ${displayName}`} url={`${site}/trial`}>
+  <NavBar client:idle />
+
+  <main class="min-h-screen flex items-center justify-center py-24">
+    <div class="container-w max-w-2xl rounded-2xl border border-black/10 bg-white p-10 shadow-xl text-center">
+      <img src="/withlia-logo.svg" alt="WithLia" class="mx-auto mb-4 h-8 w-auto" />
+
+      <p class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white/80 text-black/70 border border-black/10 mb-4">
+        WithLia Trial
+      </p>
+
+      <h1 class="text-3xl font-extrabold leading-tight md:text-4xl">
+        Congrats, {displayName}!
+      </h1>
+
+      <p class="mt-4 text-base text-black/70">Selamat, trial WithLia kamu sudah aktif. Berikut beberapa sumber untuk memulai.</p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+        <a href="/assets/withlia-trial-playbook.pdf" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card hover:opacity-95" download>
+          Download WithLia Trial Playbook
+        </a>
+
+        <a href="/gpts-free" class="inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[var(--blue)] px-5 py-3 font-semibold text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white">
+          GPTs Free Version
+        </a>
+      </div>
+
+      <p class="mt-6 text-sm text-black/60">Butuh bantuan? Balas email konfirmasi atau buka fitur Coba Gratis di situs.</p>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
