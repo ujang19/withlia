@@ -4,15 +4,22 @@ import NavBar from "../components/NavBar.tsx";
 import Footer from "../components/Footer.astro";
 import { site } from "../lib/seo";
 
-interface Props {
-  request: Request;
-}
-
-const { request } = Astro.props as Props;
+// Safely obtain the current request URL. Astro.request may be undefined
+// in some build/dev contexts, so fall back to the site's trial URL.
+const requestUrl = (typeof Astro !== 'undefined' && (Astro as any).request && (Astro as any).request.url)
+  ? (Astro as any).request.url
+  : `${site}/trial`;
 
 // Parse query param `name` and sanitize a bit
-const url = new URL(request.url);
-let name = url.searchParams.get("name") || "";
+let urlObj: URL;
+try {
+  urlObj = new URL(requestUrl);
+} catch (e) {
+  // If parsing fails, fall back to site trial URL
+  urlObj = new URL(`${site}/trial`);
+}
+
+let name = urlObj.searchParams.get("name") || "";
 name = name.replace(/\+/g, " ").trim();
 if (name.startsWith("@")) name = name.slice(1).trim();
 // Fallback
@@ -37,11 +44,11 @@ const displayName = name || "Teman WithLia";
       <p class="mt-4 text-base text-black/70">Selamat, trial WithLia kamu sudah aktif. Berikut beberapa sumber untuk memulai.</p>
 
       <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <a href="/assets/withlia-trial-playbook.pdf" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card hover:opacity-95" download>
+        <a href="https://drive.google.com/file/d/1g4BNQXCfsnSSmfJ-2TNXP0BwZoUb5eIS/view?usp=sharing" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card hover:opacity-95" target="_blank" rel="noopener noreferrer">
           Download WithLia Trial Playbook
         </a>
 
-        <a href="/gpts-free" class="inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[var(--blue)] px-5 py-3 font-semibold text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white">
+        <a href="https://chatgpt.com/g/g-685fa16a2570819186216fac4842a0ea-lily-sahabat-marketer" class="inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[var(--blue)] px-5 py-3 font-semibold text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white" target="_blank" rel="noopener noreferrer">
           GPTs Free Version
         </a>
       </div>
