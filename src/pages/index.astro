@@ -1,6 +1,8 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
+import HeroImageSection from "../components/HeroImageSection.astro";
+import CampaignMerdeka from "../components/CampaignMerdeka.astro";
 import ValueProps from "../components/ValueProps.astro";
 import Pricing from "../components/Pricing.astro";
 import MotionShowcase from "../components/MotionShowcase.tsx";
@@ -38,6 +40,8 @@ const websiteLd = {
 
   <Hero />
 
+  <HeroImageSection />
+
   <!-- React island: hydrate saat terlihat -->
   <!-- moved "Strategi Siap Pakai dalam 7 Hari" below Cara Kerja WithLia -->
 
@@ -52,6 +56,9 @@ const websiteLd = {
       <MotionShowcase client:visible />
     </div>
   </section>
+
+  <!-- Campaign Merdeka section requested to appear after the 7-days section -->
+  <CampaignMerdeka />
 
   <!-- Anchor target for primary CTA -->
   <Pricing id="start" />

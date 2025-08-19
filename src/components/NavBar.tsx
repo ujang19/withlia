@@ -29,6 +29,32 @@ export default function NavBar({ transparentUntilScroll = 8 }: Props) {
       role="navigation"
       aria-label="Primary"
     >
+      {/* Top campaign banner: smoothly collapses on scroll */}
+      <div
+        className={[
+          "w-full overflow-hidden transition-all duration-500 ease-out",
+          scrolled ? "max-h-0 opacity-0" : "max-h-[48px] opacity-100"
+        ].join(" ")}
+        aria-hidden={scrolled ? "true" : "false"}
+      >
+        <div className="w-full bg-red-600 text-white">
+          <div className="container-w py-2 text-center text-xs md:text-sm">
+            <span className="font-semibold">#MerdekaUntukDiriSendiri</span>
+            <span className="mx-1">—</span>
+            <span>CAMPAIGN BEASISWA FULL LIFETIME</span>
+            <a
+              href="#tally-open=nPxD60&tally-layout=modal&tally-align-left=1&tally-form-events-forwarding=1"
+              className="ml-2 inline-flex items-center font-semibold underline hover:opacity-90"
+              data-tally-open="nPxD60"
+              data-tally-layout="modal"
+              data-tally-align-left="1"
+              data-tally-form-events-forwarding="1"
+            >
+              klik disini
+            </a>
+          </div>
+        </div>
+      </div>
       <div className="container-w flex h-14 items-center justify-between">
         <a href="/" className="inline-flex items-center" aria-label="WithLia home">
           <img
