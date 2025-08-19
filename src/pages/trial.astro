@@ -4,18 +4,26 @@ import NavBar from "../components/NavBar.tsx";
 import Footer from "../components/Footer.astro";
 import { site } from "../lib/seo";
 
-// Safely obtain the current request URL. Astro.request may be undefined
-// in some build/dev contexts, so fall back to the site's trial URL.
-const requestUrl = (typeof Astro !== 'undefined' && (Astro as any).request && (Astro as any).request.url)
-  ? (Astro as any).request.url
-  : `${site}/trial`;
+// Safely obtain the current request URL and parse query params.
+// Astro.request.url can be absolute (https://...) or relative (/trial?...).
+// Use `site` as base when needed so query params are preserved.
+let requestUrlRaw = '';
+if (typeof Astro !== 'undefined' && (Astro as any).request && (Astro as any).request.url) {
+  requestUrlRaw = (Astro as any).request.url;
+}
 
-// Parse query param `name` and sanitize a bit
+// Default to absolute trial URL if we still don't have one
+if (!requestUrlRaw) requestUrlRaw = `${site}/trial`;
+
 let urlObj: URL;
 try {
-  urlObj = new URL(requestUrl);
+  // If requestUrlRaw is relative (starts with '/'), provide base so URL parsing keeps querystring
+  if (/^\//.test(requestUrlRaw)) {
+    urlObj = new URL(requestUrlRaw, site);
+  } else {
+    urlObj = new URL(requestUrlRaw);
+  }
 } catch (e) {
-  // If parsing fails, fall back to site trial URL
   urlObj = new URL(`${site}/trial`);
 }
 
@@ -38,7 +46,7 @@ const displayName = name || "Teman WithLia";
       </p>
 
       <h1 class="text-3xl font-extrabold leading-tight md:text-4xl">
-        Congrats, {displayName}!
+        Congrats, <span id="trial-name">{displayName}</span>!
       </h1>
 
       <p class="mt-4 text-base text-black/70">Selamat, trial WithLia kamu sudah aktif. Berikut beberapa sumber untuk memulai.</p>
@@ -56,6 +64,26 @@ const displayName = name || "Teman WithLia";
       <p class="mt-6 text-sm text-black/60">Butuh bantuan? Balas email konfirmasi atau buka fitur Coba Gratis di situs.</p>
     </div>
   </main>
+
+  <script>
+    // Client-side enhancement: read `name` from query string and replace the placeholder.
+    (function () {
+      try {
+        const params = new URLSearchParams(window.location.search || '');
+        let n = params.get('name') || '';
+        n = decodeURIComponent(n.replace(/\+/g, ' ')).trim();
+        if (n.startsWith('@')) n = n.slice(1).trim();
+        if (n) {
+          const el = document.getElementById('trial-name');
+          if (el) el.textContent = n;
+          // update title to match
+          document.title = `Withlia Trial — ${n}`;
+        }
+      } catch (e) {
+        // no-op on errors
+      }
+    })();
+  </script>
 
   <Footer />
 </BaseLayout>
