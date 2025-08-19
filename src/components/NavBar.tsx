@@ -43,12 +43,8 @@ export default function NavBar({ transparentUntilScroll = 8 }: Props) {
             <span className="mx-1">—</span>
             <span>CAMPAIGN BEASISWA FULL LIFETIME</span>
             <a
-              href="#tally-open=nPxD60&tally-layout=modal&tally-align-left=1&tally-form-events-forwarding=1"
+              href="#campaign-merdeka"
               className="ml-2 inline-flex items-center font-semibold underline hover:opacity-90"
-              data-tally-open="nPxD60"
-              data-tally-layout="modal"
-              data-tally-align-left="1"
-              data-tally-form-events-forwarding="1"
             >
               klik disini
             </a>
@@ -56,7 +52,29 @@ export default function NavBar({ transparentUntilScroll = 8 }: Props) {
         </div>
       </div>
       <div className="container-w flex h-14 items-center justify-between">
-        <a href="/" className="inline-flex items-center" aria-label="WithLia home">
+        <button
+          type="button"
+          className="inline-flex items-center bg-transparent border-0 p-0"
+          aria-label="Jump to Campaign Merdeka"
+          onClick={(e) => {
+            try {
+              const id = 'campaign-merdeka';
+              const target = document.getElementById(id);
+              // Use Lenis if available for smooth scroll, otherwise fallback to native.
+              // @ts-ignore
+              if (window?.lenis && typeof window.lenis.scrollTo === 'function') {
+                // @ts-ignore
+                window.lenis.scrollTo(target, { offset: -8 });
+              } else if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                // adjust for small header
+                window.scrollBy(0, -8);
+              }
+            } catch (err) {
+              // no-op
+            }
+          }}
+        >
           <img
             src="/withlia-logo.svg"
             alt="WithLia"
@@ -65,7 +83,7 @@ export default function NavBar({ transparentUntilScroll = 8 }: Props) {
             className="h-6 w-auto md:h-7"
             decoding="async"
           />
-        </a>
+        </button>
         <div />
         <div className="flex items-center gap-2">
           <a

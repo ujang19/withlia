@@ -4,12 +4,14 @@
  * - Success Scenario (pastel blue with subtle grid)
  * - Final CTA (navy background) with anchors compatibility
  */
+import CampaignMerdeka from "./CampaignMerdeka.astro";
 const { id, class: _class, className = "", ...rest } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
 <!-- Wrapper provides anchor target for #trial -->
 <div {...rest} id={id} class={`contents ${_class ? _class : ""} ${className}`}></div>
+
 
 <!-- Success Scenario -->
 <section class="relative w-full py-20" style="background:#E7F1FF">
@@ -26,6 +28,9 @@ const year = new Date().getFullYear();
   </div>
 </section>
 
+<!-- Campaign Merdeka section inserted after Success Scenario as requested -->
+<CampaignMerdeka />
+
 <!-- Final CTA -->
 <section id="final-cta" class="w-full py-20 text-white" style="background:#1d6ec5">
   <div class="container-w mx-auto max-w-3xl text-center">
@@ -34,7 +39,7 @@ const year = new Date().getFullYear();
     </h2>
 
     <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
-      <a href="#start" class="inline-flex items-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card transition-transform hover:scale-[1.02] active:scale-[0.99]">
+      <a href="https://app.withlia.id/checkout/?add-to-cart=1163&quantity=1" class="inline-flex items-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card transition-transform hover:scale-[1.02] active:scale-[0.99]">
         Mulai Sekarang
         <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
           <path d="M9 18l6-6-6-6"></path>

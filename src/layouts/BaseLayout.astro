@@ -61,69 +61,62 @@ const CF_TOKEN = "BLTkWpxFJ84GpKQLDSZc34N7CGRO7jJToSh6gW6a";
   <body class="antialiased text-[#111]">
     <slot />
 
-    <!-- Lenis smooth scroll -->
+    <!-- Lenis smooth scroll (init on window load, use global script) -->
     <script defer src="https://unpkg.com/@studio-freight/lenis@1.0.46/bundled/lenis.min.js"></script>
-    <script type="module">
-      const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      function start(LenisClass) {
-        if (!LenisClass) return;
-        try {
-          document.documentElement.style.scrollBehavior = 'auto';
-          document.body.style.scrollBehavior = 'auto';
-        } catch {}
-        const lenis = new LenisClass({
-              duration: 1.1,
-              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-              smoothWheel: true,
-              smoothTouch: true
-            });
-            function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-            requestAnimationFrame(raf);
+    <script>
+      (function(){
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) return;
+        window.addEventListener('load', function(){
+          // wait a tick for the global to exist
+          let tries = 0;
+          const maxTries = 100; // ~5s
+          const timer = setInterval(function(){
+            if (window.Lenis) {
+              clearInterval(timer);
+              try {
+                document.documentElement.style.scrollBehavior = 'auto';
+                document.body.style.scrollBehavior = 'auto';
+              } catch {}
+              const lenis = new window.Lenis({
+                duration: 1,
+                easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                smoothWheel: true,
+                smoothTouch: true
+              });
+              function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
+              requestAnimationFrame(raf);
+              window.lenis = lenis;
 
-            // Force a small initial tick to ensure Lenis takes over
-            setTimeout(() => lenis.raf(performance.now()), 0);
+              // Smooth anchors (skip Tally)
+              document.addEventListener('click', function(e){
+                const a = e.target?.closest?.('a[href^="#"]');
+                if (!a) return;
+                if (a.hasAttribute('data-tally-open')) return;
+                const href = a.getAttribute('href') || '';
+                if (href.startsWith('#tally-open')) return;
+                const id = decodeURIComponent(href.slice(1));
+                if (!id) return;
+                const target = document.getElementById(id);
+                if (!target) return;
+                e.preventDefault();
+                try { history.pushState(null, '', `#${id}`); } catch {}
+                lenis.scrollTo(target, { offset: -8 });
+              }, { capture: true });
 
-            // Smooth scroll for in-page anchors, excluding Tally popup links
-            document.addEventListener('click', (e) => {
-              const a = e.target?.closest?.('a[href^="#"]');
-              if (!a) return;
-              if (a.hasAttribute('data-tally-open')) return;
-              const href = a.getAttribute('href') || '';
-              if (href.startsWith('#tally-open')) return;
-              const id = decodeURIComponent(href.slice(1));
-              if (!id) return;
-              const target = document.getElementById(id);
-              if (!target) return;
-              e.preventDefault();
-              history.pushState(null, '', `#${id}`);
-              lenis.scrollTo(target, { offset: -8 });
-            });
-
-            // Expose for quick debugging
-            window.lenis = lenis;
-
-            // If page loads with a hash, re-scroll with Lenis to ensure smooth positioning
-            const hash = location.hash || '';
-            if (hash && !hash.startsWith('#tally-open')) {
-              const id = decodeURIComponent(hash.slice(1));
-              const target = document.getElementById(id);
-              if (target) {
-                setTimeout(() => lenis.scrollTo(target, { offset: -8 }), 0);
+              // On load hash
+              const hash = location.hash || '';
+              if (hash && !hash.startsWith('#tally-open')) {
+                const id = decodeURIComponent(hash.slice(1));
+                const target = document.getElementById(id);
+                if (target) setTimeout(() => lenis.scrollTo(target, { offset: -8 }), 50);
               }
+            } else if (++tries >= maxTries) {
+              clearInterval(timer);
             }
-      }
-      if (!reduce) {
-        import('https://unpkg.com/@studio-freight/lenis@1.0.46?module')
-          .then((mod) => start(mod?.default || mod?.Lenis || window.Lenis))
-          .catch(() => {
-            // fallback to global script
-            const tryGlobal = () => {
-              if (window.Lenis) { start(window.Lenis); return; }
-              requestAnimationFrame(tryGlobal);
-            };
-            tryGlobal();
-          });
-      }
+          }, 50);
+        });
+      })();
     </script>
   </body>
 </html>
