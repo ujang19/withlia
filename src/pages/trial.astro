@@ -30,38 +30,97 @@ try {
 let name = urlObj.searchParams.get("name") || "";
 name = name.replace(/\+/g, " ").trim();
 if (name.startsWith("@")) name = name.slice(1).trim();
-// Fallback
-const displayName = name || "Teman WithLia";
+// Fallback: show no name so headline reads "Kak" only
+const displayName = name || "";
+const nameSuffix = displayName ? ` ${displayName}` : "";
 ---
 
-<BaseLayout title={`Withlia Trial — ${displayName}`} url={`${site}/trial`}>
+<BaseLayout title={`Withlia Trial — ${displayName || "Day 1"}`} url={`${site}/trial`}>
   <NavBar client:idle />
 
-  <main class="min-h-screen flex items-center justify-center py-24">
-    <div class="container-w max-w-2xl rounded-2xl border border-black/10 bg-white p-10 shadow-xl text-center">
-      <img src="/withlia-logo.svg" alt="WithLia" class="mx-auto mb-4 h-8 w-auto" />
-
-      <p class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white/80 text-black/70 border border-black/10 mb-4">
-        WithLia Trial
-      </p>
-
-      <h1 class="text-3xl font-extrabold leading-tight md:text-4xl">
-        Congrats, <span id="trial-name">{displayName}</span>!
-      </h1>
-
-      <p class="mt-4 text-base text-black/70">Selamat, trial WithLia kamu sudah aktif. Berikut beberapa sumber untuk memulai.</p>
-
-      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <a href="https://drive.google.com/file/d/1g4BNQXCfsnSSmfJ-2TNXP0BwZoUb5eIS/view?usp=sharing" class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card hover:opacity-95" target="_blank" rel="noopener noreferrer">
-          Download WithLia Trial Playbook
-        </a>
-
-        <a href="https://chatgpt.com/g/g-685fa16a2570819186216fac4842a0ea-lily-sahabat-marketer" class="inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-[var(--blue)] px-5 py-3 font-semibold text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white" target="_blank" rel="noopener noreferrer">
-          GPTs Free Version
-        </a>
+  <main class="min-h-screen py-16 md:py-24">
+    <div class="container-w max-w-3xl">
+      <!-- Badge -->
+      <div class="mb-4 flex justify-center">
+        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white/80 text-black/70 border border-black/10">
+          WithLia Day 1 — Trial Version
+        </span>
       </div>
 
-      <p class="mt-6 text-sm text-black/60">Butuh bantuan? Balas email konfirmasi atau buka fitur Coba Gratis di situs.</p>
+      <!-- Header Card -->
+      <section class="rounded-2xl border border-black/10 bg-white p-8 shadow-xl">
+        <div class="text-center">
+          <img src="/withlia-logo.svg" alt="WithLia" class="mx-auto mb-5 h-8 w-auto" />
+          <h1 class="text-3xl font-extrabold leading-tight md:text-4xl">
+            🎉 Selamat, Kak<span id="trial-name">{nameSuffix}</span>!
+          </h1>
+          <p class="mt-3 text-base text-black/70">Kamu resmi dapetin <strong>WithLia Day 1 – Trial Version</strong> 🚀</p>
+        </div>
+
+        <!-- Akses Hari Ini -->
+        <div class="mt-8 grid gap-3 md:grid-cols-2">
+          <a href="https://drive.google.com/file/d/1g4BNQXCfsnSSmfJ-2TNXP0BwZoUb5eIS/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="group rounded-xl border border-black/10 bg-[#FFF5E6] p-5 transition hover:shadow-card">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl" aria-hidden>📄</span>
+              <div>
+                <div class="font-semibold">PDF Panduan Day 1</div>
+                <div class="mt-1 text-sm text-black/70">
+                  <span class="inline-flex items-center gap-1 font-semibold text-[var(--orange)]">
+                    📥 Download di sini
+                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a href="https://chatgpt.com/g/g-685fa16a2570819186216fac4842a0ea-lily-sahabat-marketer" target="_blank" rel="noopener noreferrer" class="group rounded-xl border border-black/10 bg-[#E7F1FF] p-5 transition hover:shadow-card">
+            <div class="flex items-start gap-3">
+              <span class="text-2xl" aria-hidden>🤖</span>
+              <div>
+                <div class="font-semibold">GPTs AI Trial (Day 1)</div>
+                <div class="mt-1 text-sm text-black/70">
+                  <span class="inline-flex items-center gap-1 font-semibold text-[var(--blue)]">
+                    🔗 Mulai Eksplor Sekarang
+                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- Day 1 Learnings -->
+      <section class="mt-8 rounded-2xl border border-black/10 bg-white p-8 shadow">
+        <h2 class="text-xl font-extrabold">📌 Apa yang Kamu Pelajari di Day 1?</h2>
+        <p class="mt-2 text-black/80"><strong>Menentukan Niche & Audiens Ideal</strong></p>
+        <p class="mt-1 text-black/70">Biar nggak kerja asal-asalan, mulai dari sini:</p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-black/80">
+          <li>Temukan titik temu antara <strong>minat</strong>, <strong>skill</strong>, dan <strong>peluang pasar</strong></li>
+          <li>Pahami siapa audiens yang paling tepat untuk kamu layani</li>
+          <li>Validasi niche sebelum terjun, biar nggak buang waktu dan tenaga</li>
+        </ul>
+      </section>
+
+      <!-- Upgrade CTA -->
+      <section class="mt-8 rounded-2xl border border-black/10 bg-white p-8 shadow">
+        <h2 class="text-xl font-extrabold">🚀 Biar Kamu Makin Maksimal</h2>
+        <p class="mt-2 text-black/70">Day 1 ini baru pembuka. Kalau udah ngerasain manfaatnya dan mau dapetin:</p>
+        <ul class="mt-3 list-disc space-y-2 pl-5 text-black/80">
+          <li><strong>Akses penuh</strong> semua hari & materi premium</li>
+          <li><strong>GPTs AI</strong> versi full yang udah “disekolahkan” khusus marketing</li>
+          <li><strong>Framework</strong> lengkap + komunitas support</li>
+        </ul>
+
+        <div class="mt-5">
+          <a href="https://app.withlia.id/checkout/?add-to-cart=1163&quantity=1" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card transition hover:opacity-95">
+            💳 Dapatkan Versi Lengkap
+            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+          </a>
+        </div>
+        <p class="mt-4 text-sm text-black/60">🌱 <em>Minimal satu langkah ini udah bikin kamu selangkah lebih dekat ke arah yang jelas.</em><br/><strong>Maaf deh…</strong> kalau udah nyobain, biasanya susah balik ke cara lama. 😏</p>
+      </section>
     </div>
   </main>
 
@@ -75,7 +134,7 @@ const displayName = name || "Teman WithLia";
         if (n.startsWith('@')) n = n.slice(1).trim();
         if (n) {
           const el = document.getElementById('trial-name');
-          if (el) el.textContent = n;
+          if (el) el.textContent = ` ${n}`; // prepend space for natural reading after "Kak"
           // update title to match
           document.title = `Withlia Trial — ${n}`;
         }
