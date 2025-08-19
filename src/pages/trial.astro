@@ -38,86 +38,63 @@ const nameSuffix = displayName ? ` ${displayName}` : "";
 <BaseLayout title={`Withlia Trial — ${displayName || "Day 1"}`} url={`${site}/trial`}>
   <NavBar client:idle />
 
-  <main class="min-h-screen py-16 md:py-24">
-    <div class="container-w max-w-3xl">
-      <!-- Badge -->
-      <div class="mb-4 flex justify-center">
-        <span class="inline-flex items-center rounded-full px-3 py-1 text-xs font-semibold bg-white/80 text-black/70 border border-black/10">
-          WithLia Day 1 — Trial Version
-        </span>
-      </div>
+  <main class="min-h-screen flex items-center py-16 md:py-24">
+    <div class="container-w max-w-2xl text-center">
+      <span class="inline-flex items-center rounded-full border border-black/10 bg-white/70 px-3 py-1 text-[11px] font-semibold uppercase tracking-wide text-black/60">Trial Day 1</span>
+      <h1 class="mt-3 text-4xl md:text-5xl font-extrabold leading-tight tracking-tight">
+        <span class="text-[var(--blue)]">Selamat, Kak</span><span id="trial-name">{nameSuffix}</span>.
+      </h1>
+      <p class="mt-3 text-base text-black/70">Kamu mendapatkan akses <strong>WithLia Day 1 – Trial Version</strong>.</p>
 
-      <!-- Header Card -->
-      <section class="rounded-2xl border border-black/10 bg-white p-8 shadow-xl">
-        <div class="text-center">
-          <img src="/withlia-logo.svg" alt="WithLia" class="mx-auto mb-5 h-8 w-auto" />
-          <h1 class="text-3xl font-extrabold leading-tight md:text-4xl">
-            🎉 Selamat, Kak<span id="trial-name">{nameSuffix}</span>!
-          </h1>
-          <p class="mt-3 text-base text-black/70">Kamu resmi dapetin <strong>WithLia Day 1 – Trial Version</strong> 🚀</p>
-        </div>
-
-        <!-- Akses Hari Ini -->
-        <div class="mt-8 grid gap-3 md:grid-cols-2">
-          <a href="https://drive.google.com/file/d/1g4BNQXCfsnSSmfJ-2TNXP0BwZoUb5eIS/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="group rounded-xl border border-black/10 bg-[#FFF5E6] p-5 transition hover:shadow-card">
-            <div class="flex items-start gap-3">
-              <span class="text-2xl" aria-hidden>📄</span>
-              <div>
-                <div class="font-semibold">PDF Panduan Day 1</div>
-                <div class="mt-1 text-sm text-black/70">
-                  <span class="inline-flex items-center gap-1 font-semibold text-[var(--orange)]">
-                    📥 Download di sini
-                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </a>
-
-          <a href="https://chatgpt.com/g/g-685fa16a2570819186216fac4842a0ea-lily-sahabat-marketer" target="_blank" rel="noopener noreferrer" class="group rounded-xl border border-black/10 bg-[#E7F1FF] p-5 transition hover:shadow-card">
-            <div class="flex items-start gap-3">
-              <span class="text-2xl" aria-hidden>🤖</span>
-              <div>
-                <div class="font-semibold">GPTs AI Trial (Day 1)</div>
-                <div class="mt-1 text-sm text-black/70">
-                  <span class="inline-flex items-center gap-1 font-semibold text-[var(--blue)]">
-                    🔗 Mulai Eksplor Sekarang
-                    <svg class="h-3 w-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </a>
+      <!-- Akses Hari Ini -->
+      <section class="mt-10">
+        <h2 class="text-sm font-semibold text-black/60">Akses Hari Ini</h2>
+        <div class="mt-4 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+          <a href="https://drive.google.com/file/d/1g4BNQXCfsnSSmfJ-2TNXP0BwZoUb5eIS/view?usp=sharing" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl bg-[var(--blue)] px-6 py-3 font-semibold text-white hover:opacity-95">Download PDF Day 1</a>
+          <a href="https://chatgpt.com/g/g-685fa16a2570819186216fac4842a0ea-lily-sahabat-marketer" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2 rounded-xl border-2 border-[var(--blue)] px-6 py-3 font-semibold text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white">Buka GPTs AI Trial</a>
         </div>
       </section>
 
       <!-- Day 1 Learnings -->
-      <section class="mt-8 rounded-2xl border border-black/10 bg-white p-8 shadow">
-        <h2 class="text-xl font-extrabold">📌 Apa yang Kamu Pelajari di Day 1?</h2>
-        <p class="mt-2 text-black/80"><strong>Menentukan Niche & Audiens Ideal</strong></p>
-        <p class="mt-1 text-black/70">Biar nggak kerja asal-asalan, mulai dari sini:</p>
-        <ul class="mt-3 list-disc space-y-2 pl-5 text-black/80">
-          <li>Temukan titik temu antara <strong>minat</strong>, <strong>skill</strong>, dan <strong>peluang pasar</strong></li>
-          <li>Pahami siapa audiens yang paling tepat untuk kamu layani</li>
-          <li>Validasi niche sebelum terjun, biar nggak buang waktu dan tenaga</li>
+      <section class="mx-auto mt-10 max-w-xl text-left">
+        <h2 class="text-lg font-extrabold text-center">Apa yang Kamu Pelajari di Day 1</h2>
+        <p class="mt-2 text-black/80 text-center"><strong>Menentukan Niche & Audiens Ideal</strong></p>
+        <ul class="mt-4 space-y-3 text-black/80">
+          <li class="flex items-start gap-3">
+            <svg class="mt-1 h-5 w-5 text-[var(--orange)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Temukan titik temu antara <strong>minat</strong>, <strong>skill</strong>, dan <strong>peluang pasar</strong></span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="mt-1 h-5 w-5 text-[var(--orange)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Pahami siapa audiens yang paling tepat untuk kamu layani</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="mt-1 h-5 w-5 text-[var(--orange)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Validasi niche sebelum terjun, supaya tidak buang waktu dan tenaga</span>
+          </li>
         </ul>
       </section>
 
       <!-- Upgrade CTA -->
-      <section class="mt-8 rounded-2xl border border-black/10 bg-white p-8 shadow">
-        <h2 class="text-xl font-extrabold">🚀 Biar Kamu Makin Maksimal</h2>
-        <p class="mt-2 text-black/70">Day 1 ini baru pembuka. Kalau udah ngerasain manfaatnya dan mau dapetin:</p>
-        <ul class="mt-3 list-disc space-y-2 pl-5 text-black/80">
-          <li><strong>Akses penuh</strong> semua hari & materi premium</li>
-          <li><strong>GPTs AI</strong> versi full yang udah “disekolahkan” khusus marketing</li>
-          <li><strong>Framework</strong> lengkap + komunitas support</li>
+      <section class="mx-auto mt-10 max-w-xl">
+        <h2 class="text-lg font-extrabold text-center">Biar Kamu Makin Maksimal</h2>
+        <p class="mt-2 text-black/70 text-center">Day 1 baru pembuka. Kalau mau akses penuh materi, AI versi lengkap, dan komunitas:</p>
+        <ul class="mt-4 space-y-3 text-black/80 text-left">
+          <li class="flex items-start gap-3">
+            <svg class="mt-1 h-5 w-5 text-[var(--orange)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Akses semua hari dan materi premium</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="mt-1 h-5 w-5 text-[var(--orange)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>GPTs AI versi full untuk marketing</span>
+          </li>
+          <li class="flex items-start gap-3">
+            <svg class="mt-1 h-5 w-5 text-[var(--orange)]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>
+            <span>Framework lengkap + komunitas support</span>
+          </li>
         </ul>
-
-        <div class="mt-5">
-          <a href="https://app.withlia.id/checkout/?add-to-cart=1163&quantity=1" target="_blank" rel="noopener" class="inline-flex items-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-card transition hover:opacity-95">
-            💳 Dapatkan Versi Lengkap
-            <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
-          </a>
+        <div class="mt-6 flex justify-center">
+          <a href="https://app.withlia.id/checkout/?add-to-cart=1163&quantity=1" target="_blank" rel="noopener" class="inline-flex items-center justify-center rounded-xl bg-[var(--orange)] px-6 py-3 font-semibold text-white hover:opacity-95">Dapatkan Versi Lengkap</a>
         </div>
         <p class="mt-4 text-sm text-black/60">🌱 <em>Minimal satu langkah ini udah bikin kamu selangkah lebih dekat ke arah yang jelas.</em><br/><strong>Maaf deh…</strong> kalau udah nyobain, biasanya susah balik ke cara lama. 😏</p>
       </section>
@@ -141,6 +118,40 @@ const nameSuffix = displayName ? ` ${displayName}` : "";
       } catch (e) {
         // no-op on errors
       }
+    })();
+  </script>
+
+  <!-- Confetti on first load (lightweight, respects reduced motion) -->
+  <script>
+    (function () {
+      try {
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduce) return;
+
+        function fireConfetti() {
+          if (!window.confetti) return;
+          const count = 140;
+          const defaults = { origin: { y: 0.2 } };
+          function fire(particleRatio, opts) {
+            window.confetti(Object.assign({}, defaults, opts, { particleCount: Math.floor(count * particleRatio) }));
+          }
+          fire(0.25, { spread: 26, startVelocity: 45 });
+          fire(0.2, { spread: 60 });
+          fire(0.35, { spread: 100, decay: 0.92, scalar: 0.9 });
+          fire(0.1, { spread: 120, startVelocity: 35 });
+          fire(0.1, { spread: 120, startVelocity: 25, origin: { y: 0.6 } });
+        }
+
+        if (window.confetti) {
+          fireConfetti();
+        } else {
+          const s = document.createElement('script');
+          s.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js';
+          s.async = true;
+          s.onload = fireConfetti;
+          document.head.appendChild(s);
+        }
+      } catch (_) { /* noop */ }
     })();
   </script>
 
