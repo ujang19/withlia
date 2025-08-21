@@ -96,7 +96,7 @@ export default function NavBar({ transparentUntilScroll = 8 }: Props) {
           </a>
           <a
             href="#tally-open=nPxD60&tally-layout=modal&tally-align-left=1&tally-emoji-text=👋&tally-emoji-animation=wave&tally-form-events-forwarding=1"
-            className="inline-flex items-center gap-2 rounded-xl border-2 border-[var(--blue)] px-4 py-2 text-sm font-semibold text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white"
+            className="hidden md:inline-flex items-center gap-2 rounded-xl border-2 border-[var(--blue)] px-4 py-2 text-sm font-semibold text-[var(--blue)] hover:bg-[var(--blue)] hover:text-white"
             data-tally-open="nPxD60"
             data-tally-layout="modal"
             data-tally-align-left="1"
