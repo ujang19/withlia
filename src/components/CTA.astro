@@ -6,6 +6,7 @@
  */
 import CampaignMerdeka from "./CampaignMerdeka.astro";
 const { id, class: _class, className = "", ...rest } = Astro.props;
+const SHOW_CAMPAIGN = false;
 const year = new Date().getFullYear();
 ---
 
@@ -14,7 +15,7 @@ const year = new Date().getFullYear();
 
 
 <!-- Success Scenario -->
-<section class="relative w-full py-20" style="background:#E7F1FF">
+<section class="relative w-full py-20" style="background:#fff">
   <div class="absolute inset-0 opacity-30" style="background-image:linear-gradient(rgba(17,17,17,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(17,17,17,0.06) 1px, transparent 1px); background-size:24px 24px, 24px 24px; background-position:-1px -1px, -1px -1px;"></div>
   <div class="relative container-w">
     <h2 class="text-center font-extrabold leading-tight tracking-tight text-3xl md:text-3xl">
@@ -29,7 +30,7 @@ const year = new Date().getFullYear();
 </section>
 
 <!-- Campaign Merdeka section inserted after Success Scenario as requested -->
-<CampaignMerdeka />
+{SHOW_CAMPAIGN && <CampaignMerdeka />}
 
 <!-- Final CTA -->
 <section id="final-cta" class="w-full py-20 text-white" style="background:#1d6ec5">

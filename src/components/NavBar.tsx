@@ -10,6 +10,7 @@ type Props = {
  */
 export default function NavBar({ transparentUntilScroll = 8 }: Props) {
   const [scrolled, setScrolled] = useState(false);
+  const SHOW_CAMPAIGN_BANNER = false;
 
   useEffect(() => {
     const onScroll = () => {
@@ -30,27 +31,29 @@ export default function NavBar({ transparentUntilScroll = 8 }: Props) {
       aria-label="Primary"
     >
       {/* Top campaign banner: smoothly collapses on scroll */}
-      <div
-        className={[
-          "w-full overflow-hidden transition-all duration-500 ease-out",
-          scrolled ? "max-h-0 opacity-0" : "max-h-[48px] opacity-100"
-        ].join(" ")}
-        aria-hidden={scrolled ? "true" : "false"}
-      >
-        <div className="w-full bg-red-600 text-white">
-          <div className="container-w py-2 text-center text-xs md:text-sm">
-            <span className="font-semibold">#MerdekaUntukDiriSendiri</span>
-            <span className="mx-1">—</span>
-            <span>CAMPAIGN BEASISWA FULL LIFETIME</span>
-            <a
-              href="#campaign-merdeka"
-              className="ml-2 inline-flex items-center font-semibold underline hover:opacity-90"
-            >
-              klik disini
-            </a>
+      {SHOW_CAMPAIGN_BANNER && (
+        <div
+          className={[
+            "w-full overflow-hidden transition-all duration-500 ease-out",
+            scrolled ? "max-h-0 opacity-0" : "max-h-[48px] opacity-100"
+          ].join(" ")}
+          aria-hidden={scrolled ? "true" : "false"}
+        >
+          <div className="w-full bg-red-600 text-white">
+            <div className="container-w py-2 text-center text-xs md:text-sm">
+              <span className="font-semibold">#MerdekaUntukDiriSendiri</span>
+              <span className="mx-1">—</span>
+              <span>CAMPAIGN BEASISWA FULL LIFETIME</span>
+              <a
+                href="#campaign-merdeka"
+                className="ml-2 inline-flex items-center font-semibold underline hover:opacity-90"
+              >
+                klik disini
+              </a>
+            </div>
           </div>
         </div>
-      </div>
+      )}
       <div className="container-w flex h-14 items-center justify-between">
         <button
           type="button"

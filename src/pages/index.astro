@@ -2,9 +2,9 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import Hero from "../components/Hero.astro";
 import HeroImageSection from "../components/HeroImageSection.astro";
-import CampaignMerdeka from "../components/CampaignMerdeka.astro";
 import ValueProps from "../components/ValueProps.astro";
 import Pricing from "../components/Pricing.astro";
+import Testimonials from "../components/Testimonials.astro";
 import Partnership from "../components/Partnership.astro";
 import MotionShowcase from "../components/MotionShowcase.tsx";
 import NavBar from "../components/NavBar.tsx";
@@ -61,6 +61,9 @@ const websiteLd = {
 
   <!-- Anchor target for primary CTA -->
   <Pricing id="start" />
+
+  <!-- Testimonials directly after Pricing -->
+  <Testimonials />
 
   <!-- Anchor target for trial CTA -->
   <CTA id="trial" />

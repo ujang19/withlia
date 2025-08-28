@@ -1,0 +1,76 @@
+---
+/**
+ * Testimonials section in a "bento" card grid style (4 cards).
+ * Matches site styling: container-w, rounded-2xl, subtle borders, white cards.
+ */
+const { id, class: _class, className = "", title = "Testimoni Pengguna WithLia", ...rest } = Astro.props;
+---
+
+<section {...rest} id={id} class={`w-full py-20 ${_class ? _class : ""} ${className}`}>
+  <div class="container-w">
+    <h2 class="text-center font-extrabold leading-tight tracking-tight text-3xl md:text-3xl">
+      {title}
+    </h2>
+
+    <div class="mt-8 grid grid-cols-1 gap-4 md:mt-10 md:grid-cols-12 md:gap-6">
+      <!-- Card 1 -->
+      <article class="md:col-span-5 rounded-2xl border border-black/10 bg-white p-6 md:p-8 shadow-card">
+        <header class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-full bg-[var(--blue)]/10 text-[var(--blue)] font-bold">A</div>
+          <div>
+            <div class="font-semibold">Adit</div>
+            <div class="text-xs text-black/60">Owner UMKM F&B</div>
+          </div>
+        </header>
+        <p class="mt-4 text-[15px] leading-relaxed text-black/80">
+          “Konten jadi 3× lebih cepat, dan engagement naik 45% di minggu ke-2. Framework-nya jelas, tinggal eksekusi.”
+        </p>
+      </article>
+
+      <!-- Card 2 (Bank Raya Indonesia) -->
+      <article class="md:col-span-7 rounded-2xl border border-black/10 bg-white p-6 md:p-8 shadow-card">
+        <header class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-full bg-[var(--orange)]/10 text-[var(--orange)] font-bold">BR</div>
+          <div>
+            <div class="font-semibold">Tim Software Development</div>
+            <div class="text-xs text-black/60">Bank Raya Indonesia</div>
+          </div>
+        </header>
+        <p class="mt-4 text-[15px] leading-relaxed text-black/80">
+          “Materi dan framework WithLia sudah kami gunakan dalam presentasi Eksplorasi digital marketing di Bank Raya Indonesia.
+          Sangat insightful dan mudah di implemantasikan sesuai dengan kebutuhan industri digital.
+          Ini bukti bahwa materi dan AI assistant yang digunakan oleh WithLia sesuai dengan kebutuhan perusahaan.”
+        </p>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="md:col-span-7 rounded-2xl border border-black/10 bg-white p-6 md:p-8 shadow-card">
+        <header class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-full bg-emerald-500/10 text-emerald-600 font-bold">B</div>
+          <div>
+            <div class="font-semibold">Bima</div>
+            <div class="text-xs text-black/60">Owner Brand Fashion</div>
+          </div>
+        </header>
+        <p class="mt-4 text-[15px] leading-relaxed text-black/80">
+          “AI-nya paham tone brand. Caption dan ide konten nggak terasa generik, lebih nyambung ke audiensku.”
+        </p>
+      </article>
+
+      <!-- Card 4 -->
+      <article class="md:col-span-5 rounded-2xl border border-black/10 bg-white p-6 md:p-8 shadow-card">
+        <header class="flex items-center gap-3">
+          <div class="grid h-10 w-10 place-items-center rounded-full bg-violet-500/10 text-violet-600 font-bold">D</div>
+          <div>
+            <div class="font-semibold">Dian</div>
+            <div class="text-xs text-black/60">Edupreneur</div>
+          </div>
+        </header>
+        <p class="mt-4 text-[15px] leading-relaxed text-black/80">
+          “Mentornya responsif dan praktis. Roadmap 7 hari bikin aku beneran jalan — bukan cuma belajar.”
+        </p>
+      </article>
+    </div>
+  </div>
+  
+</section>
