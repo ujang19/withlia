@@ -5,6 +5,8 @@ import HeroImageSection from "../components/HeroImageSection.astro";
 import ValueProps from "../components/ValueProps.astro";
 import Pricing from "../components/Pricing.astro";
 import Testimonials from "../components/Testimonials.astro";
+import NewsCoverage from "../components/NewsCoverage.astro";
+import Gallery from "../components/Gallery.astro";
 import Partnership from "../components/Partnership.astro";
 import MotionShowcase from "../components/MotionShowcase.tsx";
 import NavBar from "../components/NavBar.tsx";
@@ -41,8 +43,6 @@ const websiteLd = {
 
   <Hero />
 
-  <HeroImageSection />
-
   <!-- React island: hydrate saat terlihat -->
   <!-- moved "Strategi Siap Pakai dalam 7 Hari" below Cara Kerja WithLia -->
 
@@ -62,8 +62,17 @@ const websiteLd = {
   <!-- Anchor target for primary CTA -->
   <Pricing id="start" />
 
+  <!-- Hero image section moved after Pricing -->
+  <HeroImageSection />
+
   <!-- Testimonials directly after Pricing -->
   <Testimonials />
+
+  <!-- Media coverage screenshots -->
+  <NewsCoverage />
+
+  <!-- Gallery section -->
+  <Gallery />
 
   <!-- Anchor target for trial CTA -->
   <CTA id="trial" />

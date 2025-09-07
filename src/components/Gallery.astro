@@ -1,0 +1,119 @@
+---
+/**
+ * Gallery section: masonry layout with a Show More/Less toggle.
+ * Dynamically scans /public/gallery at build time and uses first 20 images by name.
+ */
+import fs from "node:fs";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const GALLERY_DIR = path.resolve(__dirname, "../../public/gallery");
+
+let scanned = [] as string[];
+try {
+  scanned = fs
+    .readdirSync(GALLERY_DIR, { withFileTypes: true })
+    .filter((d) => d.isFile())
+    .map((d) => d.name)
+    .filter((n) => /\.(png|jpe?g|webp|gif)$/i.test(n))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+} catch (e) {
+  scanned = [];
+}
+
+const defaults = {
+  title: "Lahirnya WithLia Bersama Komunitas Marketing",
+  description: "Dokumentasi kegiatan & kolaborasi WithLia.",
+  initialCount: 8,
+  images: scanned.slice(0, 20).map((n) => `/gallery/${n}`)
+};
+
+const {
+  id,
+  class: _class,
+  className = "",
+  title = defaults.title,
+  description = defaults.description,
+  initialCount = defaults.initialCount,
+  images = defaults.images,
+  ...rest
+} = Astro.props;
+
+// Display rules:
+// - Mobile: show max 8 items
+// - md and up: show exactly 3 rows by using 6 columns => 18 items
+const MOBILE_MAX = 8;
+const DESKTOP_MAX = 18;
+const gid = id || `gallery-${Math.random().toString(36).slice(2, 8)}`;
+const items = images.slice(0, DESKTOP_MAX);
+---
+
+<section {...rest} id={gid} class={`w-full py-20 ${_class ? _class : ""} ${className}`}>
+  <div class="container-w">
+    <h2 class="text-center font-extrabold leading-tight tracking-tight text-3xl md:text-3xl">
+      {title}
+    </h2>
+    <p class="mx-auto mt-3 max-w-2xl text-center text-sm text-black/60">{description}</p>
+
+    <div class="mt-8 md:mt-10">
+      <div class="grid grid-cols-2 md:grid-cols-6 gap-3 md:gap-4">
+        {items.map((src, i) => (
+          <figure class={`${i >= MOBILE_MAX ? "hidden md:block" : ""} overflow-hidden rounded-xl border border-black/10 bg-white`}>
+            <img
+              src={src}
+              alt="WithLia gallery"
+              loading="lazy"
+              decoding="async"
+              class="h-full w-full cursor-zoom-in object-cover"
+            />
+          </figure>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- Lightbox overlay -->
+  <div data-lightbox class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4">
+    <button data-lightbox-close aria-label="Tutup" class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow hover:bg-white">
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" /></svg>
+    </button>
+    <img data-lightbox-img src="" alt="Preview" class="max-h-[90vh] w-auto rounded-xl shadow-2xl" />
+  </div>
+</section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const root = document.getElementById('{gid}');
+    if (!root) return;
+    const overlay = root.querySelector('[data-lightbox]');
+    const imgPreview = root.querySelector('[data-lightbox-img]');
+    const btnClose = root.querySelector('[data-lightbox-close]');
+    if (!overlay || !imgPreview || !btnClose) return;
+
+    function open(src, alt) {
+      imgPreview.src = src;
+      imgPreview.alt = alt || 'Preview';
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+      document.documentElement.style.overflow = 'hidden';
+    }
+    function close() {
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+      imgPreview.src = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    // Target only gallery images (not lightbox preview)
+    root.querySelectorAll('figure img').forEach((img) => {
+      img.addEventListener('click', () => open(img.src, img.alt));
+    });
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+    btnClose.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+  });
+</script>
+
+<!-- No JS needed: fixed grid with responsive item caps -->

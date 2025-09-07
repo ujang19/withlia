@@ -1,0 +1,83 @@
+---
+/**
+ * News Coverage section: shows 3 screenshots from /public/news
+ * Styling follows existing patterns (container-w, rounded, subtle borders).
+ */
+const {
+  id,
+  class: _class,
+  className = "",
+  title = "Media Partner",
+  images = [
+    { src: "/news/Screenshot_352.png", alt: "Liputan WithLia - 352" },
+    { src: "/news/Screenshot_353.png", alt: "Liputan WithLia - 353" },
+    { src: "/news/Screenshot_354.png", alt: "Liputan WithLia - 354" }
+  ],
+  ...rest
+} = Astro.props;
+---
+
+<section 
+
+<section {...rest} id={id} class={`w-full py-20 ${_class ? _class : ""} ${className}`}>
+  <div class="container-w">
+    <h2 class="text-center font-extrabold leading-tight tracking-tight text-3xl md:text-3xl">
+      {title}
+    </h2>
+
+    <div class="mt-8 grid grid-cols-3 gap-3 md:mt-10 md:gap-6">
+      {images.map((img) => (
+        <figure class="rounded-2xl border border-black/10 bg-white p-2 shadow-card">
+          <img
+            src={img.src}
+            alt={img.alt}
+            loading="lazy"
+            decoding="async"
+            class="h-auto w-full cursor-zoom-in rounded-xl"
+          />
+        </figure>
+      ))}
+    </div>
+  </div>
+  <!-- Lightbox overlay -->
+  <div data-lightbox class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 p-4">
+    <button data-lightbox-close aria-label="Tutup" class="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/90 text-black shadow hover:bg-white">
+      <svg viewBox="0 0 24 24" class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" /></svg>
+    </button>
+    <img data-lightbox-img src="" alt="Preview" class="max-h-[90vh] w-auto rounded-xl shadow-2xl" />
+  </div>
+</section>
+
+<script is:inline>
+  document.addEventListener('DOMContentLoaded', () => {
+    const sections = document.querySelectorAll('section');
+    sections.forEach(root => {
+      const overlay = root.querySelector('[data-lightbox]');
+      const imgPreview = root.querySelector('[data-lightbox-img]');
+      const btnClose = root.querySelector('[data-lightbox-close]');
+      if (!overlay || !imgPreview || !btnClose) return;
+
+      function open(src, alt) {
+        imgPreview.src = src;
+        imgPreview.alt = alt || 'Preview';
+        overlay.classList.remove('hidden');
+        overlay.classList.add('flex');
+        document.documentElement.style.overflow = 'hidden';
+      }
+      function close() {
+        overlay.classList.add('hidden');
+        overlay.classList.remove('flex');
+        imgPreview.src = '';
+        document.documentElement.style.overflow = '';
+      }
+
+      // Target only gallery images (not lightbox preview)
+      root.querySelectorAll('figure img').forEach((img) => {
+        img.addEventListener('click', () => open(img.src, img.alt));
+      });
+      overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+      btnClose.addEventListener('click', close);
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+    });
+  });
+</script>
