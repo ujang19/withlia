@@ -75,11 +75,29 @@ function buildPayload({ name, email, phone, refId, message_id }) {
 
 // === Payloads ===
 
-// 1) nardisyah
-const payloadHassan = buildPayload({
-  name: "nardisyah",
-  email: "nardisyahputra27@gmail.com",
-  phone: "+6281371338032",
+// Teddy
+const payloadTeddy = buildPayload({
+  name: "Teddy",
+  email: "batman0512@gmail.com",
+  phone: "0811174972",
+  refId: makeRefId(),
+  message_id: makeMessageId(),
+});
+
+// YUSTIKA ANA
+const payloadYustika = buildPayload({
+  name: "YUSTIKA ANA",
+  email: "yustikaana06@gmail.com",
+  phone: "08998851650",
+  refId: makeRefId(),
+  message_id: makeMessageId(),
+});
+
+// Heppy Sukmawati (hsglamour)
+const payloadHeppy = buildPayload({
+  name: "Heppy Sukmawati",
+  email: "hsglamour@gmail.com",
+  phone: "085292840700",
   refId: makeRefId(),
   message_id: makeMessageId(),
 });
@@ -111,6 +129,9 @@ async function sendOne(label, payload) {
 
 // === Main ===
 (async function main() {
-  await sendOne("byadamamrullah-1", payloadHassan);
-  await sendOne("byadamamrullah-2", payloadDiah);
+  await sendOne("Teddy", payloadTeddy);
+  await sendOne("YUSTIKA ANA", payloadYustika);
+  await sendOne("Heppy Sukmawati", payloadHeppy);
+  // await sendOne("thania.khoe", payloadThania);
+  // await sendOne("diajengrezkyamalia", payloadDiajeng);
 })();

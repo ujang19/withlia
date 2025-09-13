@@ -47,7 +47,7 @@ const P = ({ children, className = "" }) => (
 const CTAButtons = () => (
   <div className="mt-6 flex flex-wrap items-center gap-3">
     <a href="#start" className="inline-flex items-center gap-2 rounded-xl bg-[var(--orange)] px-5 py-3 font-semibold text-white shadow-lg transition-transform hover:scale-[1.02] active:scale-[0.99]" style={{ ["--orange"]: colors.orange }}>
-      Mulai Sekarang <ChevronRight className="h-4 w-4" />
+      Beli Sekarang <ChevronRight className="h-4 w-4" />
     </a>
     <a
       href="#tally-open=nPxD60&tally-layout=modal&tally-align-left=1&tally-emoji-text=👋&tally-emoji-animation=wave&tally-form-events-forwarding=1"

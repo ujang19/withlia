@@ -54,48 +54,60 @@ export default function NavBar({ transparentUntilScroll = 8 }: Props) {
           </div>
         </div>
       )}
-      <div className="container-w flex h-14 items-center justify-between">
-        <button
-          type="button"
-          className="inline-flex items-center bg-transparent border-0 p-0"
-          aria-label="Jump to Campaign Merdeka"
-          onClick={(e) => {
-            try {
-              const id = 'campaign-merdeka';
-              const target = document.getElementById(id);
-              // Use Lenis if available for smooth scroll, otherwise fallback to native.
-              // @ts-ignore
-              if (window?.lenis && typeof window.lenis.scrollTo === 'function') {
+      <div className="container-w flex h-14 items-center">
+        <div className="flex-none">
+          <button
+            type="button"
+            className="inline-flex items-center bg-transparent border-0 p-0"
+            aria-label="Jump to Campaign Merdeka"
+            onClick={(e) => {
+              try {
+                const id = 'campaign-merdeka';
+                const target = document.getElementById(id);
+                // Use Lenis if available for smooth scroll, otherwise fallback to native.
                 // @ts-ignore
-                window.lenis.scrollTo(target, { offset: -8 });
-              } else if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                // adjust for small header
-                window.scrollBy(0, -8);
+                if (window?.lenis && typeof window.lenis.scrollTo === 'function') {
+                  // @ts-ignore
+                  window.lenis.scrollTo(target, { offset: -8 });
+                } else if (target) {
+                  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  // adjust for small header
+                  window.scrollBy(0, -8);
+                }
+              } catch (err) {
+                // no-op
               }
-            } catch (err) {
-              // no-op
-            }
-          }}
-        >
-          <img
-            src="/withlia-logo.svg"
-            alt="WithLia"
-            width={112}
-            height={28}
-            className="h-6 w-auto md:h-7"
-            decoding="async"
-          />
-        </button>
-        <div />
-        <div className="flex items-center gap-2">
+            }}
+          >
+            <img
+              src="/withlia-logo.svg"
+              alt="WithLia"
+              width={112}
+              height={28}
+              className="h-6 w-auto md:h-7"
+              decoding="async"
+            />
+          </button>
+        </div>
+
+        {/* Center area: menu is centered using flex-1 */}
+        <div className="flex-1 flex justify-center">
+          <div className="hidden md:flex md:items-center md:gap-6">
+              <a href="/" className="text-sm font-medium text-black/80 hover:text-black">Home</a>
+              <a href="#seven-days" className="text-sm font-medium text-black/80 hover:text-black">Withlia itu apa</a>
+              <a href="#final-cta" className="text-sm font-medium text-black/80 hover:text-black">Produk</a>
+              <a href="#partnership" className="text-sm font-medium text-black/80 hover:text-black">Partner</a>
+          </div>
+        </div>
+
+        <div className="flex-none flex items-center gap-2">
           <a
             href="https://app.withlia.id/checkout/?add-to-cart=1163&quantity=1"
             className="inline-flex items-center gap-2 rounded-xl bg-[var(--orange)] px-4 py-2 text-sm font-semibold text-white shadow-card hover:opacity-95"
             target="_blank"
             rel="noopener"
           >
-            Mulai Sekarang
+            Beli Sekarang
           </a>
           <a
             href="#tally-open=nPxD60&tally-layout=modal&tally-align-left=1&tally-emoji-text=👋&tally-emoji-animation=wave&tally-form-events-forwarding=1"
